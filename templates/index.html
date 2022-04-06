@@ -95,26 +95,12 @@
 </div>
 
 <div class="landing-container">
-  <form action="{{ url_for('dud_search') }}" method="get">
-    <label class="input-label">Search any books to see details or reviews:</label>
-    <div class="inline">
-      <input name="input2" class="input-bar" size="50" placeholder="ISBN / Title / Author / Year" required>
-      <button type="btn-primary btn" class="search-button">Search</button>
-    </div>
-  </form>
 
   <p>{{ message }}</p>
 
   <div class="form-inline text-center">
     <div>
       <p>Sign In or Register to Complete your Own Book Reviews:</p>
-    </div>
-
-    <div class="inline">
-      <form action="{{ url_for('open') }}" method="post">
-        <button type="btn primary-btn" class="search-button" value="login" name="creds">Sign In</button>
-        <button class="search-button-2" value="register" name="creds">Register</button>
-      </form>
     </div>
 
   </div>

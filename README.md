@@ -16,7 +16,7 @@ $ cd charge-center
 $ mkvirtualenv myvirtualenv
 
 # Set virtualenv to project dir
-$ cd /project1
+$ cd /charge-center
 $ setprojectdir .
 
 # Install flask to virtualenv
@@ -26,9 +26,9 @@ $ pip install flask
 
 # Set env variables
 $ cd /project1
-$ SET FLASK_APP = app.py
-$ SET DATABASE_URL = Heroku Postgres DB URI
-$ SET FLASK_DEBUG = 1
+$ set FLASK_APP = app.py
+$ set DATABASE_URL = Heroku Postgres DB URI
+$ set FLASK_DEBUG = 1
 
 # Install dependencies
 $ pip install -r requirements.txt

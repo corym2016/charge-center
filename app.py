@@ -10,6 +10,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import requests
 
 app = Flask(__name__)
+# os.environ['FLASK_DEBUG'] = 1
+os.environ['DATABASE_URL'] = 'abc'
 
 # Check for environment variable
 if not os.getenv("DATABASE_URL"):
@@ -22,13 +24,15 @@ Session(app)
 
 # Set up database
 # database engine object from SQLAlchemy that manages connections to the database
-engine = create_engine(os.getenv("DATABASE_URL"))
+# engine = create_engine(os.getenv("DATABASE_URL"))
 
 # create a 'scoped session' that ensures different users' interactions with the
 # database are kept separate
-db = scoped_session(sessionmaker(bind=engine))
+# db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/")
 #@login_required
 def index():
     return render_template("index.html")
+
+# app.run(host='0.0.0.0')
