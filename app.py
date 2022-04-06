@@ -9,6 +9,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 import requests
 
+
 app = Flask(__name__)
 # os.environ['FLASK_DEBUG'] = 1
 os.environ['DATABASE_URL'] = 'abc'
