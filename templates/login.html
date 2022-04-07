@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+
+  <style>
+  .jumbotron {
+    background-color: #f4511e; /* Orange */
+    color: #ffffff;
+    padding: 100px 25px;
+    text-align: center;
+  }
+
+  .header {
+    background-color: #f4511e; /* Orange */
+    color: #ffffff;
+    height: auto;
+    text-align: center;
+    padding-bottom: 30px;
+  }
+
+  .split-just-left {
+    width: 50%;
+    float: left;
+    text-align: left;
+    margin-top: 6px;
+    margin-left: 20px;
+  }
+
+  .split-just-right {
+    width: 50%;
+    float: right;
+    text-align: right;
+    margin-top: -17px;
+    margin-right: 20px;
+  }
+
+  .container-fluid {
+    padding: 60px;
+    text-align: center;
+  }
+
+  .bg-grey {
+    background-color: #f6f6f6;
+  }
+
+  .input-container {
+    text-align: center;
+    max-width: 300px;
+    border-radius: 5px;
+    border-color: #A9A9A9;
+    background-color: #f2f2f2;
+    padding: 20px;
+    margin: auto;
+    margin-top: 20px;
+  }
+
+  .input-bar {
+    margin-top: 6px;
+    padding: 8px 2px;
+    border-radius: 4px;
+    border-style: groove;
+    width: 100%;
+  }
+
+  .input-label {
+    float: left;
+    width: 100%;
+    margin-top: 6px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: #f4511e;
+  }
+
+  .input-button {
+    background-color: #f4511e;
+    color: white;
+    padding: 8px 2px;
+    border-color: #f4511e;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 6px;
+    width: 100%;
+  }
+
+  .input-button-2 {
+    background-color: white;
+    color: #f4511e;
+    padding: 8px 2px;
+    border-color: #f4511e;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 6px;
+    width: 100%;
+  }
+
+  .warning-message {
+    font-size: 14px;
+    font-style: italic;
+    color: #f4511e;
+  }
+  </style>
+
+  <div class="header">
+    <label class="split-just-left">Project 1: Books</label>
+    <label class="split-just-right">Cory Miller - CS50's Web Programming</label>
+  </div>
+
+<div class="input-container">
+  <form class="form text-center" action="{{ url_for('login') }}" method="post">
+    <label class="input-label" size="60">Login Below:</label>
+      <input class="input-bar" name="username" placeholder="Username">
+      <input class="input-bar" name="password" placeholder="Password" type="password">
+      <button class="btn btn-primary input-button">Submit</button>
+  </form>
+
+  <form action="{{ url_for('open_register') }}" method="post">
+    <button class="btn input-button-2">Register</button>
+  </form>
+
+<label class="warning-message">{{ message }}<label>
+
+</div>
+
+</html>

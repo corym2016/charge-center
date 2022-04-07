@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>RELAY TOGGLE</title>
+  <link rel="stylesheet" href="../static/style.css">
+</head>
+
+<style>
+.inline {
+  display: inline;
+}
+</style>
+
+<body>
+  <header id=\"main-header\">
+
+    <h1>RELAY TOGGLE</h1>
+
+    <form action="{{ url_for('relay1_toggle') }}" method="post">
+      <label class="input-label">Relay 1 Toggle:</label>
+      <div class="inline">
+        <button type="btn-primary btn" value="on" name="relay1_switch">ON</button>
+        <button value="off" name="relay1_switch" disabled>OFF</button>
+      </div>
+    </form>
+
+    <form action="{{ url_for('relay2_toggle') }}" method="post">
+      <label class="input-label">Relay 2 Toggle:</label>
+      <div class="inline">
+        <button type="btn-primary btn" value="on" name="relay2_switch">ON</button>
+        <button value="off" name="relay2_switch" disabled>OFF</button>
+      </div>
+    </form>
+
+  </header>
+</body>
+
+</html>

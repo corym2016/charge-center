@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Welcome</title>
+  <title>Charge Center</title>
   <link rel="stylesheet" href="../static/style.css">
 </head>
 
@@ -90,8 +90,8 @@
 </style>
 
 <div class="jumbotron">
-  <h1>Project 1: Books</h1>
-  <p>Cory Miller - CS50's Web Programming</p>
+  <h1>Charge Center</h1>
+  <p>Web Interface for xEV Charge Scheduling</p>
 </div>
 
 <div class="landing-container">
@@ -100,7 +100,14 @@
 
   <div class="form-inline text-center">
     <div>
-      <p>Sign In or Register to Complete your Own Book Reviews:</p>
+      <p>Sign In or Register to Schedule your xEV's Next Charge:</p>
+    </div>
+
+    <div class="inline">
+      <form action="{{ url_for('open') }}" method="post">
+        <button type="btn primary-btn" class="search-button" value="login" name="creds">Sign In</button>
+        <button class="search-button-2" value="register" name="creds">Register</button>
+      </form>
     </div>
 
   </div>
