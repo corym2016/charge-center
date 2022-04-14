@@ -20,6 +20,20 @@ class User(db.Model):
     #     db.session.add(rv)
     #     db.session.commit()
 
+class Charger(db.Model):
+    __tablename__ = "chargers"
+    ch_num = db.Column(db.Integer, primary_key=True)
+    ch_ports = db.Column(db.Integer, nullable=False)
+
+class Charger1(db.Model):
+    __tablename__ = "charger1"
+    username = db.Column(db.String, primary_key=True)
+    port_req = db.Column(db.Integer, nullable=False)
+    time_req = db.Column(db.Integer, nullable=False)
+    start_time = db.Column(db.Integer, nullable=False)
+    end_time = db.Column(db.Integer, nullable=False)
+
+
 # class Book(db.Model):
 #     __tablename__ = "books"
 #     b_id = db.Column(db.Integer, primary_key=True)

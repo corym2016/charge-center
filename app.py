@@ -40,7 +40,7 @@ requests.post('http://192.168.1.33/setRelay', json = {'relayNum':'2','binary':'0
 @app.route("/")
 #@login_required
 def index():
-    return render_template("index.html")
+    return render_template("chargerSearch.html")
 
 @app.route("/Credentials", methods=["POST"])
 def open():
@@ -81,7 +81,8 @@ def login():
                 # books.append(book)
             # Sending users data to next page
             # return render_template("profile.html", user=user, books=books, reviews=reviews, length=length, message="Successfully signed in.")
-            return render_template("relays_OFF.html")
+            return render_template("chargerSearch.html")
+            # return render_template("relays_OFF.html")
 
 @app.route("/Register", methods=["GET", "POST"])
 def register():
@@ -144,5 +145,62 @@ def relay2_toggle():
         else:
             return render_template("relays_OFF.html")
 
+@app.route("/ChargeSchedule", methods=["GET", "POST"])
+def chargerSearch():
+    chargerNum = request.form['chargerNum']
+    # chargerPort = request.form['chargerPort']
+    numPorts = db.execute("SELECT ch_ports FROM chargers WHERE ch_num = :chargerNum", {"chargerNum":chargerNum}).fetchone()
+    proxy = []
+    proxy_num = []
+    for i in range(1,numPorts[0]+1):
+        getProxy_url = 'http://192.168.1.33/getProxy'
+        # add value to proxy list (proxy is list of on or off for each proxy signal)
+        proxy.append(int(requests.get(getProxy_url).json()['proxy'+str(i)]))
+        proxy_num.append(i)
+    # get charger data (who is charging at what times) and pass to html
+    charger_data = db.execute("SELECT * FROM charger"+chargerNum).fetchall()
+    # check if any cars are plugged in. if not pass warning message
+    if all(p == 0 for p in proxy):
+        message = "Ensure that vehicle is plugged in..."
+        return render_template("scheduleView.html", chargerNum=chargerNum, numPorts=numPorts, charger_data=charger_data, proxy=proxy, proxy_num=proxy_num, message=message)
+    else:
+        return render_template("scheduleView.html", chargerNum=chargerNum, numPorts=numPorts, charger_data=charger_data, proxy=proxy, proxy_num=proxy_num)
+
+# Method to add schedule a time for a charger (add yourself to the line)
+@app.route("/ChargeScheduled/Charger<chargerNum>", methods=["GET"])
+def chargeRequest(chargerNum,chargerPort):
+    numPorts = db.execute("SELECT ch_ports FROM chargers WHERE ch_num = :chargerNum", {"chargerNum":chargerNum}).fetchone()
+    # Get user input arguments
+    port_req = int(request.args.get("port_select"))
+
+    # Get user input arguments
+    time_req = int(request.args.get("time_req"))
+    end_time = int(request.args.get("done_time"))
+    # API to get current time during request (start time)
+    datetime = 'http://worldclockapi.com/api/json/est/now'
+    datetime = requests.get(datetime).json()['currentDateTime']
+    # Convert start time and end time to minutes (12am military time = 0mins)
+    hr = int(datetime[11:13])
+    min = int(datetime[14:16])
+    start_time = (hr*60) + min
+    end_time = end_time + start_time
+    # check to see if there are any current chargers before this request
+    charger_data = db.execute("SELECT * FROM charger"+chargerNum).fetchall()
+    # if first in line (no one else before charging) then immediately start charging, turn on relay1
+    if len(charger_data) == 0:
+        requests.post('http://192.168.1.33/setRelay', json = {'relayNum':chargerPort,'binary':'1'})
+    # add data to database Table for specifiic charger to track its line
+    db.execute("INSERT INTO charger"+chargerNum+"(username, port_req, time_req, start_time, end_time) VALUES\
+                (:username_in, :port_req_in, :time_req_in, :start_time_in, :end_time_in)",
+                {"username_in": session['username'],
+                "port_req_in": chargerPort,
+                "time_req_in": time_req,
+                "start_time_in": start_time,
+                "end_time_in": end_time})
+    db.commit()
+    # reload charger data for html page
+    charger_data = db.execute("SELECT * FROM charger"+chargerNum).fetchall()
+    # pull up charger schedule page again with updates
+    return render_template("scheduleView.html", chargerNum=chargerNum, numPorts=numPorts, chargerPort=chargerPort, charger_data=charger_data)
 
 # app.run(host='0.0.0.0')
