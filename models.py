@@ -27,8 +27,8 @@ class Charger(db.Model):
 
 class Charger1(db.Model):
     __tablename__ = "charger1"
-    username = db.Column(db.String, primary_key=True)
-    port_req = db.Column(db.Integer, nullable=False)
+    # username = db.Column(db.String, primary_key=True)
+    port_req = db.Column(db.Integer, primary_key=True)
     time_req = db.Column(db.Integer, nullable=False)
     start_time = db.Column(db.Integer, nullable=False)
     end_time = db.Column(db.Integer, nullable=False)
